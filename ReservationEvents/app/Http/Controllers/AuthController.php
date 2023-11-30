@@ -36,7 +36,7 @@ class AuthController extends Controller
             if($client->password == $password){
                 Auth::login($client);
                 $clienconn = Auth::user();
-                return view('welcome', ['clienconn'=>$clienconn]);
+                return view('associationDashboard', ['clienconn'=>$clienconn]);
             }else {
                 return redirect()->route('register.association');
             }
