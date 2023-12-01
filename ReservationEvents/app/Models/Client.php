@@ -11,6 +11,8 @@ class Client extends Model implements Authenticatable
 {
     use HasFactory;
     use AuthenticableTrait;
-
+    function reservation(){
+        return $this->hasMany(Reservation::class);
+    }
     
 }

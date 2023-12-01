@@ -122,7 +122,7 @@ a.sidebar-link{
                     </ul>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Liste</a>
+                            <a href="{{route('listClientReservation', $clienconn->id)}}" class="sidebar-link">Liste</a>
                         </li>
                        
                     </ul>

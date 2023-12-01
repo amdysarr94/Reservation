@@ -21,15 +21,18 @@ class AuthController extends Controller
             ]);
         $email = $request->email;
         $password = $request->password;
-        // dd($email, $password);
+        
        if($client = Client::where('email', $email)->first()){
+            // dd('ok');
             $client_password = $client->password;
-            if($client_password == $password){
+           
+            if($client_password===$password){
+               
                 Auth::login($client);
                
-                return redirect()->route('home');
+                return redirect()->route('indexClient', $client->id);
             }else {
-                return redirect()->route('register.client');
+                return redirect()->route('register.client', $client->id);
             }
            
         }elseif($client = Association::where('email', $email)->first()){

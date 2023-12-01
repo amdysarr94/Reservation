@@ -7,7 +7,7 @@
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-label mt-4">Email</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" name="email">
-            <small id="emailHelp" class="form-text text-muted">Entrez l'email de l'association.</small>
+            <small id="emailHelp" class="form-text text-muted">Entrez l'email </small>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1" class="form-label mt-4">Mot de passe</label>

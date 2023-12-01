@@ -11,5 +11,9 @@ class Evenement extends Model
     use HasFactory;
     function association() {
         return $this->belongsTo(Association::class);
-     }
+    }
+    function reservation(){
+        return $this->hasMany(Reservation::class);
+    }
+
 }
