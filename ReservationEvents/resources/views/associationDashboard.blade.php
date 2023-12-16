@@ -104,6 +104,7 @@ a.sidebar-link{
                     </div>
                     <ul class="sidebar-nav">
                         <li class="sidebar-header">
+                            
                             {{$clienconn->nom}}
                         </li>
                         <li class="sidebar-item">

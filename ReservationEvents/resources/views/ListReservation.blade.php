@@ -30,7 +30,7 @@
                                 <button type="submit" class="btn btn-success mr-2">Accepter</button>
                             </form>
 
-                            <form class="d-flex" method="post" action="#">
+                            <form class="d-flex" method="post" action="{{route('reservationDeny', $reservation)}}">
                                 @csrf
                                 <input type="hidden" name="id_client" value="{{$client->id}}">
                                 <input type="hidden" name="id_client" value="{{$reservation->id}}">

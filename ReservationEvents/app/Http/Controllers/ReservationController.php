@@ -8,6 +8,8 @@ use App\Models\Association;
 use App\Models\Reservation;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\DenyNotification;
 use Illuminate\Database\Eloquent\Builder;
 
 class ReservationController extends Controller
@@ -17,13 +19,14 @@ class ReservationController extends Controller
         $client = Client::find($id);
        return view('homeClient', compact('client'));
     }
-    function evenement($id){
-        $client_id = $id;
+    function evenement(){
+        $client_id= Auth::guard('client')->user()->id;
+        // dd($client_id);
         $events = Evenement::all();
         return view('clientReservation', compact('client_id', 'events'));
     }
     function reserve(Request $request, $id){
-        $id_client = $id;
+        $id_client = Auth::guard('client')->user()->id;
         $client_infos = Client::find($id_client);
         $event_recu = $request->event_id;
         // dd($client_infos, $event_recu);
@@ -67,7 +70,15 @@ class ReservationController extends Controller
     }
     
     
-    function reserveUpdate(){
+    function reserveUpdate(Reservation $reservation){
+        // dd($reservation);
+        $reservation->isValidate = "Non";
+        // dd($reservation);
+        $reservation->update();
+        $client = Client::where('id', $reservation->client_id)->get()->first();
+        // dd($client);
+        $client->notify(new DenyNotification($reservation->id));
+        return back();
 
     }
 }

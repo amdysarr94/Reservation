@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Evenement;
 use App\Models\Association;
-use Illuminate\Console\Scheduling\Event;
+use App\Notifications\AddEventNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Console\Scheduling\Event;
 
 class EvenementController extends Controller
 {
@@ -53,6 +55,10 @@ class EvenementController extends Controller
         $event->date_event = $request->date_event;
         // dd($event);
         $event->save();
+        $clients = Client::all();
+        foreach($clients as $client){
+            $client->notify(new AddEventNotification($event->id));
+        }
         return back();
         // return redirect()->route('dashboardAssos');
     }

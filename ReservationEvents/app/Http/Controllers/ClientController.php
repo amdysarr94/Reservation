@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -38,12 +40,32 @@ class ClientController extends Controller
         $client->prenom = $request->prenom;
         $client->email = $request->email;
         $client->téléphone = $request->tel;
-        $client->password = $request->password;
+        $client->password = Hash::make($request->password);
         // dd($client);
         $client->save();
         return redirect()->route('login');
     }
-    function login(){
-        
+    function login(Request $request){
+        // dd('ok');
+        $credentials = $request->validate([
+            "email"=>["required", "email"],
+            "password"=>["required"]
+        ]);
+        // dd('ok');
+        $test = auth()->guard("association")->attempt($credentials);
+        //  dd($test);
+        if($test){
+            $assosId = Auth::guard("client")->id();
+            // $assosId = auth()->user()->id;
+            $clienconn = Client::where("id", $assosId)->get()->first();
+            // session($clienconn);
+            Auth::login($clienconn);
+            $clienconn = auth::user();
+            //  dd($clienconn);
+            // dd('ok');
+            // $evenements = Evenement::where("association_id", $assosId)->get();
+            // dd($evenements);
+             return view('associationDashboard', ['clienconn' => $clienconn]);
+        }
     }
 }

@@ -3,26 +3,28 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\Association;
+use Illuminate\Support\Facades\Auth;
 
 class AssociationMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
      */
-    // app/Http/Middleware/CheckAssociationMiddleware.php
+    public function handle($request, Closure $next)
+    {
+        // Votre logique d'authentification pour les associations
+        // $association = Association::where('email', $request->email)->first();
 
-public function handle($request, Closure $next)
-{
-    // Vérifier si l'utilisateur est authentifié en tant qu'association
-    if (auth('association')->check()) {
-        return $next($request);
+        if (Auth::guard('association')->check()) {
+            // Authentification réussie
+            return $next($request);
+        }
+
+        return redirect()->route('login');
     }
-
-    return redirect()->route('login')->with('error', 'Accès interdit pour les associations');
-}
-
 }
