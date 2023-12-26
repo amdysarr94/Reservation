@@ -28,7 +28,7 @@ Route::Post('/post/register/client', [ClientController::class, 'postregistration
 Route::get('/register/association', [AssociationController::class, 'registration'])->name('register.association');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::Post('/post/login', [AuthController::class, 'authentificate'])->name('post.login');
-Route::get('/login/client', [ClientController::class, 'login'])->name('login.association');
+// Route::get('/login/client', [ClientController::class, 'login'])->name('login.association');
 Route::Post('/post/register/association', [AssociationController::class, 'postregistration'])->name('post.register.association');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

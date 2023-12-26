@@ -15,6 +15,7 @@ class AuthController extends Controller
         return view('login');
     }
     function authentificate(Request $request){
+        
         $request->validate([
             "email" => 'required',
             "password" => 'required'
@@ -22,8 +23,9 @@ class AuthController extends Controller
     
         $email = $request->email;
         $password = $request->password;
-    
-        if ($client = Client::where('email', $email)->first()) {
+        
+        if ($client = Client::where('email', $email)->get()->first()) {
+            // dd('ok un client');
             $credentials = $request->validate([
                 "email"=>["required", "email"],
                 "password"=>["required"]
@@ -35,10 +37,12 @@ class AuthController extends Controller
                 Auth::login($client);
                 $client = auth::user();
                 return redirect()->route('indexClient', $client->id);
-            }else {
-                 return redirect()->route('register.client', $client->id);
-                  }
-          } elseif ($clienconn = Association::where('email', $email)->first()) {
+            }
+            // else {
+            //      return redirect()->route('register.client', $client->id);
+            //       }
+          } elseif ($clienconn = Association::where('email', $email)->get()->first()) {
+            // dd('ok une assos');
             $credentials = $request->validate([
                 "email"=>["required", "email"],
                 "password"=>["required"]
@@ -58,12 +62,13 @@ class AuthController extends Controller
                 // $evenements = Evenement::where("association_id", $assosId)->get();
                 // dd($evenements);
                  return view('associationDashboard', ['clienconn' => $clienconn]);
-            } else {
-            return redirect()->route('register.client');
-            }
+            } 
+            // else {
+            // return redirect()->route('register.client');
+            // }
     }
     
-   
+    dd('rien ne se passe ');
     }
     function logout(){
         Auth::guard('association')->logout();
